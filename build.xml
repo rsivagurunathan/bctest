@@ -1,0 +1,49 @@
+<project name="Sample usage of Salesforce Ant tasks" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+
+    <property file="build.properties"/>
+    <property environment="env"/>
+
+    <target name="check">
+      <sf:deploy username="${sf.username}" 
+                   password="${sf.password}" 
+                   serverurl="${sf.serverurl}" 
+                   deployRoot="src"
+                   runAllTests="false"
+                   checkOnly="true"/>
+    </target>
+
+    <target name="test">
+      <sf:deploy username="${sf.username}" 
+                   password="${sf.password}" 
+                   serverurl="${sf.serverurl}" 
+                   deployRoot="src"
+                   runAllTests="true"
+                   checkOnly="true"/>
+    </target>
+
+    <target name="save">
+      <sf:deploy username="${sf.username}" 
+                 password="${sf.password}" 
+                 serverurl="${sf.serverurl}" 
+                 deployRoot="src" 
+                 runAllTests="false">
+      </sf:deploy>
+    </target>
+
+    <target name="deploy">
+      <sf:deploy username="${sf.username}" 
+                 password="${sf.password}" 
+                 serverurl="${sf.serverurl}" 
+                 deployRoot="src" 
+                 runAllTests="true">
+      </sf:deploy>
+    </target>
+
+    <target name="retrieve">
+      <sf:retrieve username="${sf.username}" 
+                   password="${sf.password}" 
+                   serverurl="${sf.serverurl}" 
+                   retrieveTarget="src" 
+                   unpackaged="src/package.xml"/>
+    </target>
+</project>

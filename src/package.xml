@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Hotrod_Dealer</members>
+        <members>Hotrod_Dealer_Test</members>
+        <members>Hotrod_Heroku</members>
+        <members>Hotrod_Heroku_Test</members>
+        <members>Hotrod_Request</members>
+        <members>Hotrod_Request_Test</members>
+        <members>Hotrod_WS</members>
+        <members>Hotrod_WS_Test</members>
+        <members>Hotrod_Zuora</members>
+        <members>Hotrod_Zuora_Test</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>HRD_Account_Sync</members>
+        <members>HRD_Primary_Contact_Validation</members>
+        <members>Hotrod_Primary_Contact</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>NI_REST_Parameters__c</members>
+        <name>CustomObject</name>
+    </types>
+    <version>24.0</version>
+</Package>
