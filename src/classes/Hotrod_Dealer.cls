@@ -119,6 +119,9 @@ public class Hotrod_Dealer{
             profile_data.put('email',c.email);
             acs_response = h_acs.set_user_profile('TNL',c.email,external_id,profile_data);
 
+            //Update Contact
+            c.HRD_callout_in_progress__c = false;
+            update c;
         }
 
     }
@@ -197,12 +200,43 @@ public class Hotrod_Dealer{
         //Create new user call
         acs_response = h_acs.update_user('TNL',old_email,c.email);
 
-        if(!acs_response.success){
+        if(acs_response.success){
+
+            //Update Profile
+
+            //Init New ACS Integration Object
+            ACS_Integration h_acs_update = new ACS_Integration();
+
+            //Init Response Object
+            ACS_Integration.response_object acs_response_update;
+
+            //Check if test mode
+            if(Test.isRunningTest()){
+                HttpResponse res = new HttpResponse();
+                res.setStatusCode(200);
+                h_acs_update.set_test_mode(res);
+            }
+
+            //Set External ID
+            String external_id = (c.Account.External_Id__c != null)?c.Account.External_Id__c:String.valueOf((math.round(math.random()*1000000)));
+
+            //Set User Profile
+            Map<String,String> profile_data = new Map<String,String>();
+            profile_data.put('firstName',c.firstname);
+            profile_data.put('lastName',c.lastname);
+            profile_data.put('email',c.email);
+            acs_response_update = h_acs_update.set_user_profile('TNL',c.email,external_id,profile_data);
+
             //Update Contact
             c.HRD_callout_in_progress__c = false;
             update c;
+            
+        }else{
+            //Update Contact
             c.ACS_Exception__c = acs_response.headers.get('X-NI-statusMessage');
-        }
+            c.HRD_callout_in_progress__c = false;
+            update c;
+        }   
 
         
     }
