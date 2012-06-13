@@ -4,9 +4,9 @@ There is a dependency on ACS Integration build for Salesforce.
 
 Custom Setting Entries:
 
-    Name					Parameter		Platform	Type		Value
-
-    HEROKU_Accept			Accept			HEROKU		Header		application/json	
-    HEROKU_Content-Type		Content-Type	HEROKU		Header		application/json	
-    HEROKU_Password			Auth			HEROKU		Password	testpass	
-    HEROKU_Username			Auth			HEROKU		Username	bamboouser	
+    Name                    Parameter       Platform    Type        Value
+    
+    HEROKU_Accept           Accept          HEROKU      Header      application/json
+    HEROKU_Content-Type     Content-Type    HEROKU      Header      application/json
+    HEROKU_Password         Auth            HEROKU      Password    testpass
+    HEROKU_Username         Auth            HEROKU      Username    bamboouser
