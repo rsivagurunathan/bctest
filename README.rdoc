@@ -1,8 +1,8 @@
 =Salesforce Build for Hotrod
 
-There is a dependency on ACS Integration build for Salesforce.
+Salesforce API document for Hotrod :: https://docs.google.com/document/d/1j7HJ24CGOGJgi06e3yBXaL8t9fh2x5B0OPifvdwmQIk/edit
 
-Custom Setting Entries:
+Custom setting entries for Heroku:
 
     Name                       Parameter          Platform       Type           Value
 
@@ -10,3 +10,15 @@ Custom Setting Entries:
     HEROKU_Content-Type        Content-Type       HEROKU         Header         application/json
     HEROKU_Password            Auth               HEROKU         Password       testpass
     HEROKU_Username            Auth               HEROKU         Username       bamboouser
+
+Custom setting entries for ACS:
+
+    Name                       Parameter              Platform      Type         Value
+
+    ACS_Content-Type           Content-Type           ACS           Header       application/json
+    ACS_Private_Key            Private_Key            ACS           Key          c193cc7d053e49ad69dd0275c9e60ff5
+    ACS_X-NI-apiKey            X-NI-apiKey            ACS           Header       593155656d717eeca2db99ded1d2dd7d
+    ACS_X-NI-apiVersion        X-NI-apiVersion        ACS           Header       1
+    ACS_X-NI-signatureType     X-NI-signatureType     ACS           Header       2
+
+
