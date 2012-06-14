@@ -9,7 +9,7 @@ trigger Hotrod_Primary_Contact on Contact (after insert, after update, before up
             //This will limit how many primary contact can be registered at one time
             Integer processing_count_limit = 0; 
             for(Contact c : [SELECT Id, primary_contact__c, HRD_callout_in_progress__c, Heroku_Update_Completed__c, ACS_Registration_Completed__c, ACS_Profile_Update_Completed__c, Account.External_Id__c FROM Contact WHERE Id IN :Trigger.New]){
-                if(c.primary_contact__c && processing_count_limit <= 10){
+                if(c.primary_contact__c && processing_count_limit <= 10 && c.Account.External_Id__c != null){
                     try{
                         Hotrod_Dealer.register_primary_contact(c.Id);
                         c.HRD_callout_in_progress__c = true;
@@ -29,7 +29,7 @@ trigger Hotrod_Primary_Contact on Contact (after insert, after update, before up
              
             for (Integer i = 0; i < Trigger.new.size(); i++) {
                 //Activate Primary Contact Access
-                if(!System.Trigger.old[i].primary_contact__c && System.Trigger.new[i].primary_contact__c && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c){
+                if(!System.Trigger.old[i].primary_contact__c && System.Trigger.new[i].primary_contact__c && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c && System.Trigger.new[i].Account_External_Id__c != null){
                     try{
                         Hotrod_Dealer.register_primary_contact(System.Trigger.new[i].Id);
                         Contact c = new Contact(Id = System.Trigger.new[i].Id);
@@ -42,7 +42,7 @@ trigger Hotrod_Primary_Contact on Contact (after insert, after update, before up
                     //Increment Count To avoid Governer Limit Exceptions
                     processing_count_limit++;
                 //Delete Primary Contact Access
-                }else if(System.Trigger.old[i].primary_contact__c && !System.Trigger.new[i].primary_contact__c && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c){
+                }else if(System.Trigger.old[i].primary_contact__c && !System.Trigger.new[i].primary_contact__c && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c && System.Trigger.new[i].Account_External_Id__c != null){
                     try{
                         Hotrod_Dealer.delete_primary_contact(System.Trigger.new[i].Id);
                         Contact c = new Contact(Id = System.Trigger.new[i].Id);
@@ -55,7 +55,7 @@ trigger Hotrod_Primary_Contact on Contact (after insert, after update, before up
                     //Increment Count To avoid Governer Limit Exceptions
                     processing_count_limit++;
                 //Update Primary Contact Email
-                }else if((System.Trigger.old[i].Email != System.Trigger.new[i].Email) && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c && System.Trigger.new[i].primary_contact__c){
+                }else if((System.Trigger.old[i].Email != System.Trigger.new[i].Email) && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c && System.Trigger.new[i].primary_contact__c && System.Trigger.new[i].Account_External_Id__c != null){
                     try{
                         Hotrod_Dealer.change_primary_contact_email(System.Trigger.new[i].Id,System.Trigger.old[i].Email);
                         Contact c = new Contact(Id = System.Trigger.new[i].Id);
@@ -68,7 +68,7 @@ trigger Hotrod_Primary_Contact on Contact (after insert, after update, before up
                     //Increment Count To avoid Governer Limit Exceptions
                     processing_count_limit++;
                 //Update Primary Contact 
-                }else if((System.Trigger.old[i].FirstName != System.Trigger.new[i].FirstName) && (System.Trigger.old[i].LastName != System.Trigger.new[i].LastName) && System.Trigger.new[i].primary_contact__c && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c && ){
+                }else if(((System.Trigger.old[i].FirstName != System.Trigger.new[i].FirstName) || (System.Trigger.old[i].LastName != System.Trigger.new[i].LastName)) && System.Trigger.new[i].primary_contact__c && processing_count_limit <= 10 && !System.Trigger.new[i].HRD_callout_in_progress__c  && System.Trigger.new[i].Account_External_Id__c != null){
                     try{
                         Hotrod_Dealer.update_primary_contact(System.Trigger.new[i].Id);
                         Contact c = new Contact(Id = System.Trigger.new[i].Id);
