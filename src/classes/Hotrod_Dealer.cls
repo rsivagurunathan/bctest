@@ -38,7 +38,7 @@ public class Hotrod_Dealer{
             }
 
             //Create new user call
-            acs_response = h_acs.create_user('TNL',c.email,password);
+            acs_response = h_acs.create_user('HRD',c.email,password);
 
             if(acs_response.success){
                 c.acs_password__c = password;
@@ -72,7 +72,7 @@ public class Hotrod_Dealer{
             profile_data.put('firstName',c.firstname);
             profile_data.put('lastName',c.lastname);
             profile_data.put('email',c.email);
-            acs_response = h_acs.set_user_profile('TNL',c.email,external_id,profile_data);
+            acs_response = h_acs.set_user_profile('HRD',c.email,external_id,profile_data);
 
             if(acs_response.success){
                 c.acs_profile_update_completed__c = true;
@@ -117,7 +117,7 @@ public class Hotrod_Dealer{
             profile_data.put('firstName',c.firstname);
             profile_data.put('lastName',c.lastname);
             profile_data.put('email',c.email);
-            acs_response = h_acs.set_user_profile('TNL',c.email,external_id,profile_data);
+            acs_response = h_acs.set_user_profile('HRD',c.email,external_id,profile_data);
 
             //Update Contact
             c.HRD_callout_in_progress__c = false;
@@ -148,7 +148,7 @@ public class Hotrod_Dealer{
             }
 
             //Create new user call
-            acs_response = h_acs.delete_user('TNL',c.email);
+            acs_response = h_acs.delete_user('HRD',c.email);
 
             c.acs_registration_completed__c = acs_response.success;
 
@@ -198,7 +198,7 @@ public class Hotrod_Dealer{
         }
 
         //Create new user call
-        acs_response = h_acs.update_user('TNL',old_email,c.email);
+        acs_response = h_acs.update_user('HRD',old_email,c.email);
 
         if(acs_response.success){
 
@@ -225,7 +225,7 @@ public class Hotrod_Dealer{
             profile_data.put('firstName',c.firstname);
             profile_data.put('lastName',c.lastname);
             profile_data.put('email',c.email);
-            acs_response_update = h_acs_update.set_user_profile('TNL',c.email,external_id,profile_data);
+            acs_response_update = h_acs_update.set_user_profile('HRD',c.email,external_id,profile_data);
 
             //Update Contact
             c.HRD_callout_in_progress__c = false;
@@ -267,7 +267,7 @@ public class Hotrod_Dealer{
         }
 
         //Create new user call
-        acs_response = h_acs.reset_password('TNL',c.email,password,password);
+        acs_response = h_acs.reset_password('HRD',c.email,password,password);
 
         if(acs_response.success){
             c.acs_password__c = password;
