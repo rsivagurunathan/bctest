@@ -204,18 +204,23 @@
         </filters>
         <label>New This Week</label>
     </listViews>
-    <validationRules>
-        <fullName>Cant_create_more_than_1_primary_contact</fullName>
-        <active>false</active>
-        <description>When a primary contact already exists, users cannot create additional ones</description>
-        <errorConditionFormula>Account.00NS0000001BS4w  &gt; 0</errorConditionFormula>
-        <errorDisplayField>Primary_Contact__c</errorDisplayField>
-        <errorMessage>A Primary Contact already exists for this dealer</errorMessage>
-    </validationRules>
+    <namedFilters>
+        <fullName>Opportunity_00NS0000001BaY5MAK</fullName>
+        <active>true</active>
+        <field>Opportunity.Contact_Name__c</field>
+        <filterItems>
+            <field>Contact.AccountId</field>
+            <operation>equals</operation>
+            <valueField>$Source.AccountId</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Opportunity_Quote Prepared For</name>
+        <sourceObject>Opportunity</sourceObject>
+    </namedFilters>
     <validationRules>
         <fullName>Inactive_contact_cannot_be_primary</fullName>
-        <active>false</active>
-        <errorConditionFormula>Primary_Contact__c = true</errorConditionFormula>
+        <active>true</active>
+        <errorConditionFormula>AND(Primary_Contact__c = true,  Inactive_Contact__c =TRUE)</errorConditionFormula>
         <errorDisplayField>Inactive_Contact__c</errorDisplayField>
         <errorMessage>An Inactive contact cannot be a Primary Contact simultaneously.</errorMessage>
     </validationRules>
@@ -333,5 +338,17 @@ $Profile.Name != &apos;API User Profile&apos;)</errorConditionFormula>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>http://weather.yahoo.com/search/weather2?p={!Contact_MailingPostalCode}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>dsfs__Send_with_DocuSign</fullName>
+        <availability>online</availability>
+        <description>This button will initiate a DocuSign Envelope that is linked to the Contact</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send with DocuSign</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/apex/dsfs__DocuSign_JavaScript&quot;)}
+DocuSign_CreateEnvelope();</url>
     </webLinks>
 </CustomObject>

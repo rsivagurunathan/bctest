@@ -55,7 +55,7 @@
     <fields>
         <fullName>Account_ID__c</fullName>
         <externalId>false</externalId>
-        <formula>UPPER(LEFT(SUBSTITUTE(Name,&apos;.&apos;,&apos;&apos;), 2))&amp;RIGHT(text(YEAR( DATEVALUE( CreatedDate ) )), 2)&amp;&quot;-&quot;&amp;LEFT( Id,4)</formula>
+        <formula>UPPER(LEFT(SUBSTITUTE(Name,&apos;.&apos;,&apos;&apos;), 2))&amp;RIGHT(text(YEAR( DATEVALUE( CreatedDate ) )), 2)&amp;&quot;-&quot;&amp;LEFT(  External_ID__c ,4)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Account ID</label>
         <required>false</required>
@@ -115,7 +115,7 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Automotive</fullName>
-                <default>false</default>
+                <default>true</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Banking</fullName>
@@ -242,6 +242,19 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Managing_Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Managing Agency</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Accounts (Agency)</relationshipLabel>
+        <relationshipName>Accounts1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Ownership</fullName>
         <picklist>
             <picklistValues>
@@ -263,6 +276,17 @@
             <sorted>false</sorted>
         </picklist>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Parent.Account_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Parent Account ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Rating</fullName>
@@ -381,26 +405,22 @@
             <controllingField>Type</controllingField>
             <picklistValues>
                 <fullName>Car Supermarket</fullName>
-                <controllingFieldValues>Feed Dealer</controllingFieldValues>
-                <controllingFieldValues>Long Tail</controllingFieldValues>
+                <controllingFieldValues>Car Dealer</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Franchise</fullName>
-                <controllingFieldValues>Feed Dealer</controllingFieldValues>
-                <controllingFieldValues>Long Tail</controllingFieldValues>
+                <controllingFieldValues>Car Dealer</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Independent</fullName>
-                <controllingFieldValues>Feed Dealer</controllingFieldValues>
-                <controllingFieldValues>Long Tail</controllingFieldValues>
+                <controllingFieldValues>Car Dealer</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Key Account</fullName>
-                <controllingFieldValues>Feed Dealer</controllingFieldValues>
-                <controllingFieldValues>Long Tail</controllingFieldValues>
+                <controllingFieldValues>Car Dealer</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -413,11 +433,7 @@
         <fullName>Type</fullName>
         <picklist>
             <picklistValues>
-                <fullName>Feed Dealer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Long Tail</fullName>
+                <fullName>Car Dealer</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -485,11 +501,8 @@
         <fullName>Billing_address_cannot_be_blank</fullName>
         <active>true</active>
         <description>The billing address is mandatory</description>
-        <errorConditionFormula>IF(
-ISNEW(),
-FALSE,OR(ISBLANK( BillingCity ), 
-ISBLANK( BillingStreet ), 
-ISBLANK( BillingPostalCode)))</errorConditionFormula>
+        <errorConditionFormula>IF(ISNEW(), FALSE,OR( ISBLANK( BillingCity ), ISBLANK( BillingStreet ), 
+ISBLANK(  BillingPostalCode )))</errorConditionFormula>
         <errorDisplayField>BillingStreet</errorDisplayField>
         <errorMessage>Please enter a billing address</errorMessage>
     </validationRules>
@@ -497,7 +510,9 @@ ISBLANK( BillingPostalCode)))</errorConditionFormula>
         <fullName>Credit_Check_Passed</fullName>
         <active>true</active>
         <description>When finance informs the sales team that the account passed the credit check, the SAP ID must be populated.</description>
-        <errorConditionFormula>AND(( Credit_Check_Passed__c = TRUE), ISBLANK( SAP_ID__c ))</errorConditionFormula>
+        <errorConditionFormula>IF(
+ISNEW(),
+FALSE,AND(( Credit_Check_Passed__c = TRUE), ISBLANK( SAP_ID__c )))</errorConditionFormula>
         <errorDisplayField>SAP_ID__c</errorDisplayField>
         <errorMessage>Please enter the SAP ID for this account.</errorMessage>
     </validationRules>
@@ -509,15 +524,6 @@ NOT(REGEX(Phone, &quot;0\\D*?(\\d\\D*?){10}&quot;))
 ,$Profile.Name != &apos;API User Profile&apos;)</errorConditionFormula>
         <errorDisplayField>Phone</errorDisplayField>
         <errorMessage>Please ensure the number starts with a 0 and is 11 digits long</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>SAP_ID_starts_with_a_9_and_be_7_digits</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND( 
-NOT(REGEX( SAP_ID__c , &quot;9\\D*?(\\d\\D*?){6}&quot;)) 
-,$Profile.Name != &apos;API User Profile&apos;)</errorConditionFormula>
-        <errorDisplayField>SAP_ID__c</errorDisplayField>
-        <errorMessage>This SAP ID is invalid, all SAP IDs start with 9</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>UK_Postcode_format</fullName>
@@ -652,5 +658,17 @@ REGEX( BillingPostalCode , &quot;[a-zA-Z]\\d[a-zA-Z]\\s\\d[a-zA-Z]{2}&quot;)
         <showsLocation>true</showsLocation>
         <showsStatus>true</showsStatus>
         <url>http://maps.yahoo.com/py/maps.py?cn={!Account_BillingCountry}&amp;csz={!Account_BillingCity}+{!Account_BillingState}+{!Account_BillingPostalCode}+&amp;addr={!Account_BillingAddress}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>dsfs__Send_with_DocuSign</fullName>
+        <availability>online</availability>
+        <description>This button will initiate a DocuSign Envelope that will be linked to the Account.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send with DocuSign</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/apex/dsfs__DocuSign_JavaScript&quot;)}
+DocuSign_CreateEnvelope();</url>
     </webLinks>
 </CustomObject>

@@ -14,7 +14,7 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Automotive</fullName>
-                <default>false</default>
+                <default>true</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Banking</fullName>
@@ -216,6 +216,10 @@
         <label>Region</label>
         <picklist>
             <picklistValues>
+                <fullName>Key Account</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>East Midlands</fullName>
                 <default>false</default>
             </picklistValues>
@@ -228,11 +232,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Scotland North</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Scotland South</fullName>
+                <fullName>Scotland</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -360,6 +360,17 @@
         <url>http://news.altavista.com/search?nc=0&amp;q={!Lead_Company}</url>
     </webLinks>
     <webLinks>
+        <fullName>Convert</fullName>
+        <availability>online</availability>
+        <description>The &quot;do not create a new opportunity upon conversion&quot; checkbox is true by default &gt;&gt; no opportunity is created</description>
+        <displayType>button</displayType>
+        <linkType>url</linkType>
+        <masterLabel>Convert</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/lead/leadconvert.jsp?retURL=/{!Lead.Id}&amp;id={!Lead.Id}&amp;nooppti=1</url>
+    </webLinks>
+    <webLinks>
         <fullName>GoogleMaps</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
@@ -448,5 +459,17 @@
         <showsLocation>true</showsLocation>
         <showsStatus>true</showsStatus>
         <url>http://maps.yahoo.com/py/maps.py?cn={!Lead_Country}&amp;csz={!Lead_City}+{!Lead_State}+{!Lead_PostalCode}+&amp;addr={!Lead_Address}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>dsfs__Send_with_DocuSign</fullName>
+        <availability>online</availability>
+        <description>This button will initiate a DocuSign Envelope that is linked to the Lead</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send with DocuSign</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/apex/dsfs__DocuSign_JavaScript&quot;)}
+DocuSign_CreateEnvelope();</url>
     </webLinks>
 </CustomObject>

@@ -64,22 +64,35 @@ global with sharing class Hotrod_WS {
                 external_ids.add(json_param_map[i].get('Account_ID'));
             }
             List<Account> accounts_for_listings = [SELECT Id, Account_Id__c FROM Account WHERE Account_Id__c IN :external_ids];
+            //Get Assets
+            List<Asset> assets_for_listings = [SELECT Id, Account__c, Account__r.Account_Id__c FROM Asset WHERE Account__r.Account_Id__c IN :external_ids];
+            //Create Listings
             for(Integer i = 0; i < json_param_map.size(); i++){
 
                 Listings__c car_listing = new Listings__c();
 
                 car_listing.Active_Listings__c = Decimal.valueOf(json_param_map[i].get('Active_Listings'));
                 car_listing.New_Listings__c = Decimal.valueOf(json_param_map[i].get('New_Listings'));
+                //Link Account
                 for(Account a :accounts_for_listings){
                     if(a.Account_Id__c == json_param_map[i].get('Account_ID')){
                         car_listing.Account_Name__c = a.Id;
                     }
                 }
+                //Link Asset
+                for(Asset a :assets_for_listings){
+                    if(a.Account__r.Account_Id__c == json_param_map[i].get('Account_ID')){
+                        car_listing.Asset__c = a.Id;
+                    }
+                }
 
-                car_listings.add(car_listing);
+                if(car_listing.Asset__c != null){
+                    car_listings.add(car_listing);
+                }
             }
-            Database.insert(car_listings);
-
+            if(!car_listings.isEmpty()){
+                Database.insert(car_listings);
+            }
             return 'Listings Created.';
         }else{
             return 'Resource Does Not Exist.';

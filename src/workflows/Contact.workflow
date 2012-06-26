@@ -58,6 +58,7 @@
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
+        <description>Email sent to the primary contact when a reset password is actioned</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

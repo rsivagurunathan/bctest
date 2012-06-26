@@ -23,14 +23,14 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Hotrod - Send Account Address Updated to SAP</fullName>
+        <fullName>Address update - Inform Finance</fullName>
         <actions>
-            <name>Generate_Account_Amendment_form</name>
+            <name>send_address_info_to_finance</name>
             <type>Task</type>
         </actions>
         <active>true</active>
-        <description>When an account address is updated, send the new information to SAP</description>
-        <formula>or( ISCHANGED( BillingCity ) ,  ISCHANGED( BillingStreet ) ,  ISCHANGED( BillingPostalCode ))</formula>
+        <description>When the address is updated (was not blank), a task is assigned to the account owner to generate the amendment form and send it to finance</description>
+        <formula>AND( NOT(ISNEW()), OR( NOT(ISBLANK(PRIORVALUE(BillingCity))), NOT(ISBLANK(PRIORVALUE(BillingStreet))), NOT(ISBLANK(PRIORVALUE(BillingPostalCode)))), OR( ISCHANGED(BillingCity), ISCHANGED( BillingStreet), ISCHANGED( BillingPostalCode )))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <tasks>
@@ -43,5 +43,15 @@
         <protected>false</protected>
         <status>Not Started</status>
         <subject>Generate Account Amendment form</subject>
+    </tasks>
+    <tasks>
+        <fullName>send_address_info_to_finance</fullName>
+        <assignedToType>owner</assignedToType>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>High</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>send address info to finance</subject>
     </tasks>
 </Workflow>
