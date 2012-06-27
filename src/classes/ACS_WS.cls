@@ -22,6 +22,9 @@ global with sharing class ACS_WS {
         }else if(acs_action_type == 'setUserProfile'){
             acs_package = '/profile';
             acs_method = '/setUserProfile';   
+        }else if(acs_action_type == 'getUserProfile'){
+            acs_package = '/profile';
+            acs_method = '/getUserProfile';   
         }
 
         //Init ACS Request
@@ -33,14 +36,18 @@ global with sharing class ACS_WS {
         HttpResponse acs_res = new_acs_request.callout();
 
         //Generate Dynamic JSON
-        JSONGenerator gen = JSON.createGenerator(false);
-        gen.writeStartObject();
-        gen.writeStringField('X-NI-statusMessage', (acs_res.getHeader('X-NI-statusMessage') != null)?acs_res.getHeader('X-NI-statusMessage'):'');
-        gen.writeStringField('X-NI-statusCode', (acs_res.getHeader('X-NI-statusCode') != null)?acs_res.getHeader('X-NI-statusCode'):'');
-        gen.writeNumberField('ACS_Status', acs_res.getStatusCode());
-        gen.writeEndObject();
+        if(acs_res.getStatusCode() != 200 || acs_action_type != 'getUserProfile') {
+            JSONGenerator gen = JSON.createGenerator(false);
+            gen.writeStartObject();
+            gen.writeStringField('X-NI-statusMessage', (acs_res.getHeader('X-NI-statusMessage') != null)?acs_res.getHeader('X-NI-statusMessage'):'');
+            gen.writeStringField('X-NI-statusCode', (acs_res.getHeader('X-NI-statusCode') != null)?acs_res.getHeader('X-NI-statusCode'):'');
+            gen.writeNumberField('ACS_Status', acs_res.getStatusCode());
+            gen.writeEndObject();
 
-        return gen.getAsString();
+            return gen.getAsString();
+        }else{
+            return acs_res.getBody();
+        }
     }
 
     @HttpGet
