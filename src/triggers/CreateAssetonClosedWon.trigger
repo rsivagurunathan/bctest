@@ -12,7 +12,7 @@ trigger CreateAssetonClosedWon on Opportunity (after insert, after update) {
             //New Accoun Asset
             a_account = new Asset();
             a_account.AccountId = o.AccountId;
-            a_contract.Contract_Number__c = o.Contract_Number__c;
+            a_account.Contract_Number__c = o.Contract_Number__c;
                 a_account.Product2Id = ol.PricebookEntry.Product2Id;
                 a_account.Agreed_Monthly_Price__c = ol.Agreed_Monthly_Price__c;
                 a_account.Agreed_Monthly_Usage__c = ol.Usage__c;
