@@ -8,11 +8,11 @@ trigger CreateAssetonClosedWon on Opportunity (after insert, after update) {
          Asset[] ast = new Asset[]{};
          //Account Assets
          Asset a_account = new Asset();
-         Asset a_contract = new Asset();
          for(OpportunityLineItem ol: OLI){
             //New Accoun Asset
             a_account = new Asset();
             a_account.AccountId = o.AccountId;
+            a_contract.Contract_Number__c = o.Contract_Number__c;
                 a_account.Product2Id = ol.PricebookEntry.Product2Id;
                 a_account.Agreed_Monthly_Price__c = ol.Agreed_Monthly_Price__c;
                 a_account.Agreed_Monthly_Usage__c = ol.Usage__c;
@@ -23,22 +23,6 @@ trigger CreateAssetonClosedWon on Opportunity (after insert, after update) {
                 a_account.Description = ol.Description;
                 a_account.Name = ol.PricebookEntry.Product2.Name;
             ast.add(a_account);
-            
-            //New Contract Asset
-            a_contract = new Asset();
-            a_contract.AccountId = o.AccountId;
-            a_contract.Contract_Number__c = o.Contract_Number__c;
-                a_contract.Product2Id = ol.PricebookEntry.Product2Id;
-                a_contract.Agreed_Monthly_Price__c = ol.Agreed_Monthly_Price__c;
-                a_contract.Agreed_Monthly_Usage__c = ol.Usage__c;
-                a_contract.Quantity = ol.Quantity;
-                a_contract.Price =  ol.UnitPrice;
-                a_contract.PurchaseDate = o.CloseDate;
-                a_contract.Status = 'Purchased';
-                a_contract.Description = ol.Description;
-                a_contract.Name = ol.PricebookEntry.Product2.Name;
-            ast.add(a_contract);
-            
             
             ol.Converted_to_Asset__c = true;
         }
