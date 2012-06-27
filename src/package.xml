@@ -7,6 +7,7 @@
         <members>ACS_Request_Test</members>
         <members>ACS_WS</members>
         <members>ACS_WS_Test</members>
+        <members>HRD_Version_Control</members>
         <members>Hotrod_Dealer</members>
         <members>Hotrod_Dealer_Test</members>
         <members>Hotrod_Heroku</members>
@@ -24,7 +25,9 @@
         <name>ApexPage</name>
     </types>
     <types>
+        <members>CreateAssetonClosedWon</members>
         <members>HRD_Account_Sync</members>
+        <members>HRD_Opportunity_Automation</members>
         <members>HRD_Primary_Contact_Validation</members>
         <members>Hotrod_Primary_Contact</members>
         <name>ApexTrigger</name>

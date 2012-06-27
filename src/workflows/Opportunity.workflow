@@ -76,6 +76,16 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Opp_RT_to_create_quote</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Create_Quote_Classified_Opportunity_RT</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Opp RT to create quote</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>Additional Line Item - Approval Status Update</fullName>
         <actions>
@@ -87,8 +97,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND(NOT(ISNULL(Line_Item_count__c )), 
-PRIORVALUE(Line_Item_count__c )  &lt;&gt;  Line_Item_count__c)</formula>
+        <formula>AND(NOT(ISNULL(Line_Item_count__c )),  PRIORVALUE(Line_Item_count__c )  &lt;&gt;  Line_Item_count__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -110,17 +119,6 @@ PRIORVALUE(Line_Item_count__c )  &lt;&gt;  Line_Item_count__c)</formula>
         </criteriaItems>
         <description>When the opportunity line item requires approval, the Requires approval on the opportunity is updated to be included in the approval process.</description>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Opportunity Approved - Ready for Quote</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Opportunity.Approval_Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <description>Once the opportunity is approved by the sales director/head of sales, the page layout is updated with the Quote related list</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Set Account Status to Active</fullName>
@@ -145,6 +143,27 @@ PRIORVALUE(Line_Item_count__c )  &lt;&gt;  Line_Item_count__c)</formula>
             <value>Competitor,Prospect,Agency</value>
         </criteriaItems>
         <description>When an opportunity is won for a new account, the status of this account is set to active</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Opportunity Record Type</fullName>
+        <actions>
+            <name>Update_Opp_RT_to_create_quote</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Quote_Expiry_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.QuoteEndDate__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.QuoteBeginDate__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

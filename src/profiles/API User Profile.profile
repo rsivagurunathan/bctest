@@ -25,6 +25,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HRD_Version_Control</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Hotrod_Dealer</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -77,6 +81,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Account_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

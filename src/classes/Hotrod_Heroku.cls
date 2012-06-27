@@ -18,7 +18,7 @@ public with sharing class Hotrod_Heroku {
     public response_object new_main_contact(Id contact_id){
 
         //Get Contact
-        Contact c = [SELECT Id, email, Inactive_Contact__c, FirstName, LastName, Account.name, Account.BillingCity ,Account.BillingStreet ,Account.BillingPostalCode FROM Contact WHERE Id = :contact_Id];
+        Contact c = [SELECT Id, email, Inactive_Contact__c, FirstName, LastName, Account.name, Account.ShippingCity ,Account.ShippingStreet ,Account.ShippingPostalCode FROM Contact WHERE Id = :contact_Id];
 
         //Init New Response Object
         response_object heroku_response;
@@ -44,7 +44,7 @@ public with sharing class Hotrod_Heroku {
 
     public response_object update_main_contact(Id contact_id){
         //Get Contact
-        Contact c = [SELECT Id, email, Inactive_Contact__c, FirstName, LastName, Account.name, Account.BillingCity ,Account.BillingStreet ,Account.BillingPostalCode FROM Contact WHERE Id = :contact_Id];
+        Contact c = [SELECT Id, email, Inactive_Contact__c, FirstName, LastName, Account.name, Account.ShippingCity ,Account.ShippingStreet ,Account.ShippingPostalCode FROM Contact WHERE Id = :contact_Id];
 
         //Init New Response Object
         response_object heroku_response;
@@ -70,7 +70,7 @@ public with sharing class Hotrod_Heroku {
 
     public response_object new_dealer(Id account_id){
         //Get Account
-        Account a = [SELECT Id, Phone, Website, Email__c, Name, Account_ID__c, BillingCity ,BillingStreet ,BillingPostalCode FROM Account WHERE Id = :account_id];
+        Account a = [SELECT Id, Phone, Website, Email__c, Name, Account_ID__c, ShippingCity ,ShippingStreet ,ShippingPostalCode, Status__c FROM Account WHERE Id = :account_id];
 
         //Init New Response Object
         response_object heroku_response;
@@ -96,7 +96,7 @@ public with sharing class Hotrod_Heroku {
 
     public response_object update_dealer(Id account_id){
         //Get Account
-        Account a = [SELECT Id, Phone, Website, Email__c, Name, Account_ID__c, BillingCity ,BillingStreet ,BillingPostalCode FROM Account WHERE Id = :account_id];
+        Account a = [SELECT Id, Phone, Website, Email__c, Name, Account_ID__c, ShippingCity ,ShippingStreet ,ShippingPostalCode, Status__c FROM Account WHERE Id = :account_id];
 
         //Init New Response Object
         response_object heroku_response;

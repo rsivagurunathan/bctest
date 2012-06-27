@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_the_account_owner_when_the_usage_limit_is_exceeded</fullName>
+        <description>Email the account owner when the usage limit is exceeded</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Hotrod_Email_Templates/Usage_Limit_Exceeded</template>
+    </alerts>
     <rules>
         <fullName>Usage Limit Exceeded</fullName>
-        <active>false</active>
+        <actions>
+            <name>Email_the_account_owner_when_the_usage_limit_is_exceeded</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
         <criteriaItems>
             <field>Asset.Discrepancy__c</field>
             <operation>notEqual</operation>

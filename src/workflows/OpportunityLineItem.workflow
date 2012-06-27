@@ -47,8 +47,8 @@
         </actions>
         <active>true</active>
         <description>If a discount is &gt;10%, the opportunity must be approved before it is processed further</description>
-        <formula>Discount__c &gt;0.10</formula>
-        <triggerType>onAllChanges</triggerType>
+        <formula>AND( $UserRole.Name &lt;&gt; &quot;Sales Director&quot;, Discount__c &gt;0.10)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Opp Line Items Approval Required %3D FALSE</fullName>
@@ -57,10 +57,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND( OR(Product2.Approval_required__c = TRUE),
-IF(ISPICKVAL( Opportunity.Approval_Status__c , &quot;approved&quot;), FALSE, TRUE),
-if(ISPICKVAL( Opportunity.Approval_Status__c , &quot;rejected&quot;), FALSE, TRUE)
-)</formula>
+        <formula>AND( OR(Product2.Approval_required__c = TRUE), IF(ISPICKVAL( Opportunity.Approval_Status__c , &quot;approved&quot;), FALSE, TRUE), if(ISPICKVAL( Opportunity.Approval_Status__c , &quot;rejected&quot;), FALSE, TRUE) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
