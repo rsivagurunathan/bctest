@@ -10,6 +10,7 @@
         <members>HRD_Version_Control</members>
         <members>Hotrod_Dealer</members>
         <members>Hotrod_Dealer_Test</members>
+        <members>Hotrod_GForce</members>
         <members>Hotrod_Heroku</members>
         <members>Hotrod_Heroku_Test</members>
         <members>Hotrod_Request</members>
@@ -26,6 +27,7 @@
     </types>
     <types>
         <members>CreateAssetonClosedWon</members>
+        <members>HRD_Account_Id_Generator</members>
         <members>HRD_Account_Sync</members>
         <members>HRD_Opportunity_Automation</members>
         <members>HRD_Primary_Contact_Validation</members>

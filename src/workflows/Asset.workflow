@@ -17,12 +17,8 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>Asset.Discrepancy__c</field>
-            <operation>notEqual</operation>
-            <value>0</value>
-        </criteriaItems>
         <description>When the dealer exceeds their usage limit, notify the sales rep to negotiate contract amendment.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <formula>AND(ISCHANGED(Discrepancy__c), Discrepancy__c&lt;&gt;0)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

@@ -19,6 +19,9 @@ global with sharing class ACS_WS {
         if(acs_action_type == 'createUser'){
             acs_package = '/authN';
             acs_method = '/createUser';
+        }else if(acs_action_type == 'updateUser'){
+            acs_package = '/authN';
+            acs_method = '/updateUser';   
         }else if(acs_action_type == 'setUserProfile'){
             acs_package = '/profile';
             acs_method = '/setUserProfile';   

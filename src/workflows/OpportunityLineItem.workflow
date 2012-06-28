@@ -50,44 +50,4 @@
         <formula>AND( $UserRole.Name &lt;&gt; &quot;Sales Director&quot;, Discount__c &gt;0.10)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
-    <rules>
-        <fullName>Opp Line Items Approval Required %3D FALSE</fullName>
-        <actions>
-            <name>Opp_Line_Item_Approval_Required_FALSE</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( OR(Product2.Approval_required__c = TRUE), IF(ISPICKVAL( Opportunity.Approval_Status__c , &quot;approved&quot;), FALSE, TRUE), if(ISPICKVAL( Opportunity.Approval_Status__c , &quot;rejected&quot;), FALSE, TRUE) )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Opp Line Items Approval Required %3D TRUE</fullName>
-        <actions>
-            <name>Opp_Line_Item_Approval_Required_TRUE</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>If the product requires approval = TRUE.</description>
-        <formula>Product2.Approval_required__c = TRUE</formula>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Product approved</fullName>
-        <actions>
-            <name>Product_approved</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.Approval_Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>OpportunityLineItem.Approved__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
 </Workflow>

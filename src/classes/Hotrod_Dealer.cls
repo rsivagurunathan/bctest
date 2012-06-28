@@ -333,6 +333,9 @@ public class Hotrod_Dealer{
             }
         }
 
+        //Send Email to GForce
+        Hotrod_GForce hrd_gforce = new Hotrod_GForce();
+        hrd_gforce.new_dealer(a.id);
 
         update a;
 
