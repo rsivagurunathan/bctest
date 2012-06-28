@@ -364,6 +364,10 @@ public class Hotrod_Dealer{
             a.heroku_last_sync__c = system.now();
         }
 
+        //Send Email to GForce
+        Hotrod_GForce hrd_gforce = new Hotrod_GForce();
+        hrd_gforce.update_dealer(a.id);
+
         update a;
 
     }

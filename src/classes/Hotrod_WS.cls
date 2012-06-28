@@ -44,7 +44,7 @@ global with sharing class Hotrod_WS {
             
             JSONGenerator gen = JSON.createGenerator(false);
             gen.writeStartObject();
-            gen.writeStringField('Account_ID', gen_account_id);
+            gen.writeStringField('Account_ID', a.Acc_ID__c);
             gen.writeEndObject();
 
             return gen.getAsString();
