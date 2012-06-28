@@ -6,12 +6,20 @@ public class Hotrod_GForce{
 
     public void new_dealer(Id account_id){
 
-    	//Get Account
-        Account account = new Account();
-        account = [SELECT Id, External_ID__c, Parent_Account_ID__c, Status__c, Phone, Website, Email__c, Name, Account_ID__c, BillingCity, BillingState, BillingStreet ,BillingPostalCode, BillingCountry FROM Account WHERE Id = :account_id];
-        Contact_Function__c contact = new Contact_Function__c();
-        contact = [SELECT Id, Contact_Name__r.FirstName, Contact_Name__r.LastName, Contact_Name__r.Phone FROM Contact_Function__c WHERE Account_Name__c = :account_id];
+    	//Contact Details
+    	String name = 'None';
+    	String phone = 'None';
 
+    	//Get Account
+        Account account = [SELECT Id, External_ID__c, Parent_Account_ID__c, Status__c, Phone, Website, Email__c, Name, Account_ID__c, BillingCity, BillingState, BillingStreet ,BillingPostalCode, BillingCountry FROM Account WHERE Id = :account_id];
+        try{
+        	Contact_Function__c contact = [SELECT Id, Contact_Name__r.FirstName, Contact_Name__r.LastName, Contact_Name__r.Phone FROM Contact_Function__c WHERE Account_Name__c = :account_id AND Function__c = 'Technical Contact'];
+    		name = contact.Contact_Name__r.FirstName + ' ' + contact.Contact_Name__r.LastName;
+    		phone = contact.Contact_Name__r.Phone;
+    	}catch(exception e){
+    		system.debug(e);
+    	}
+    	
     	Messaging.reserveSingleEmailCapacity(2);
     	Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
@@ -37,8 +45,8 @@ public class Hotrod_GForce{
 			account.BillingState + '<br/>' +
 			account.BillingCountry + '<br/><br/>' +
 			'Phone: ' + account.Phone + '<br/><br/>' +
-			'Technical Contact Name: ' + contact.Contact_Name__r.FirstName + ' ' + contact.Contact_Name__r.LastName + '<br/>' +
-			'Technical Contact Phone: ' + contact.Contact_Name__r.Phone + '<br/>'
+			'Technical Contact Name: ' + name + '<br/>' +
+			'Technical Contact Phone: ' + phone + '<br/>'
 
 		);
 
