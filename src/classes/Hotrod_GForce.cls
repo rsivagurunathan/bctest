@@ -19,12 +19,12 @@ public class Hotrod_GForce{
     	}catch(exception e){
     		system.debug(e);
     	}
-    	
+
     	Messaging.reserveSingleEmailCapacity(2);
     	Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
     	String[] toAddresses = new String[] {'newsinternational@gforces.co.uk'}; 
-		String[] ccAddresses = new String[] {'richard.ozols@makepositive.com'};
+		String[] ccAddresses = new String[] {'newsinternational@gforces.co.uk'};
 
 		mail.setToAddresses(toAddresses);
 		mail.setCcAddresses(ccAddresses);

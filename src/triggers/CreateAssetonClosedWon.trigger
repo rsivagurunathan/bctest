@@ -1,6 +1,6 @@
 trigger CreateAssetonClosedWon on Opportunity (after insert, after update) {
      for(Opportunity o: trigger.new){ 
-      if(o.isWon == true && o.HasOpportunityLineItem == true){
+      if(o.isWon == true && o.HasOpportunityLineItem == true && o.type != 'Upsell'){
          String opptyId = o.Id;
          OpportunityLineItem[] OLI = [Select UnitPrice, Usage__c, Agreed_Monthly_Price__c,  Quantity, PricebookEntry.Product2Id, PricebookEntry.Product2.Name, Description, Converted_to_Asset__c  
                                       From OpportunityLineItem 

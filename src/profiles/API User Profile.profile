@@ -29,6 +29,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Hotrod_Ajax</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Hotrod_Dealer</apexClass>
         <enabled>true</enabled>
     </classAccesses>

@@ -8,6 +8,7 @@
         <members>ACS_WS</members>
         <members>ACS_WS_Test</members>
         <members>HRD_Version_Control</members>
+        <members>Hotrod_Ajax</members>
         <members>Hotrod_Dealer</members>
         <members>Hotrod_Dealer_Test</members>
         <members>Hotrod_GForce</members>
